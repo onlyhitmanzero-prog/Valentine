@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine 💕</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#ffd6e8;
+    overflow:hidden;
+    font-family:"Comic Sans MS", cursive;
+}
+
+/* ---------- PAGE SYSTEM ---------- */
+.page{
+    width:100vw;
+    height:100vh;
+    display:none;
+    position:relative;
+    padding:20px;
+    text-align:center;
+}
+
+h1{
+    color:#ff4d88;
+}
+
+/* ---------- BUTTONS ---------- */
+button{
+    padding:12px 22px;
+    border:none;
+    border-radius:30px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.next{
+    background:#ff85b3;
+    color:white;
+    margin-top:20px;
+}
+
+/* ---------- PAGE 1 ---------- */
+#page1{ display:block; }
+
+.memories{
+    position:relative;
+    width:100%;
+    height:80vh;
+}
+
+.memories img{
+    position:absolute;
+    width:110px;
+    border-radius:12px;
+    box-shadow:0 6px 12px rgba(0,0,0,0.25);
+    transform:rotate(var(--r));
+}
+
+/* ---------- PAGE 2 (VINTAGE LETTER) ---------- */
+.letter{
+    background:
+        linear-gradient(rgba(255,255,255,0.9),rgba(255,255,255,0.9)),
+        url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    width:90%;
+    max-width:420px;
+    height:72vh;
+    margin:auto;
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.3);
+    font-family:"Georgia","Times New Roman",serif;
+    border:2px solid #e6b3c6;
+    overflow-y:auto;
+    text-align:left;
+    color:#8b004f;
+    line-height:1.8;
+}
+
+.lips{
+    position:absolute;
+    bottom:10px;
+    right:20px;
+    font-size:30px;
+}
+
+/* ---------- PAGE 3 ---------- */
+#page3 h1{
+    font-size:38px;
+}
+
+.options{
+    margin-top:40px;
+}
+
+.yes{
+    background:#ff4d88;
+    color:white;
+    margin-right:20px;
+}
+
+.no{
+    background:#ccc;
+    position:absolute;
+}
+
+/* ---------- CONFETTI ---------- */
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    animation:fall 3s linear infinite;
+}
+
+@keyframes fall{
+    from{ transform:translateY(-100vh); }
+    to{ transform:translateY(100vh); }
+}
+
+/* ---------- PULSING HEARTS ---------- */
+.big-heart{
+    position:fixed;
+    font-size:120px;
+    animation:pulse 1.2s ease-in-out infinite;
+    pointer-events:none;
+}
+
+@keyframes pulse{
+    0%{ transform:scale(0.7); opacity:0.6; }
+    50%{ transform:scale(1.4); opacity:1; }
+    100%{ transform:scale(0.7); opacity:0.6; }
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:600px){
+    .memories img{ width:120px; }
+    #page3 h1{ font-size:30px; }
+    .big-heart{ font-size:90px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+    <h1>Our Best Memories 💕</h1>
+    <div class="memories">
+        <img src="golu1.jpg" style="top:10%; left:5%; --r:-20deg;">
+        <img src="golu.jpg" style="top:30%; left:50%; --r:15deg;">
+        <img src="golu2.jpg" style="top:55%; left:20%; --r:-10deg;">
+        <img src="golu3.jpg" style="top:15%; left:70%; --r:25deg;">
+    </div>
+    <button class="next" onclick="goTo(2)">Next 💖</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+    <h1>My Love Letter 💌</h1>
+    <div class="letter">
+        <p id="typedLetter"></p>
+        <div class="lips">💋</div>
+    </div>
+    <button class="next" onclick="goTo(3)">One Last Question 💕</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+    <h1>Will You Be My Valentine? 💖</h1>
+
+    <div class="options">
+        <button class="yes" onclick="yesAnswer()">YES 💘</button>
+        <button class="no" id="noBtn">NO 🥺</button>
+<img src="golu5.jpg" style="top:80%; left:100%; --r:-15deg;width:120px;
+">
+
+
+    </div>
+
+    <h2 id="result" style="color:#ff4d88;margin-top:30px;"></h2>
+</div>
+
+<script>
+
+/* ---------- PAGE NAVIGATION ---------- */
+function goTo(n){
+    document.querySelectorAll('.page').forEach(p=>p.style.display="none");
+    document.getElementById("page"+n).style.display="block";
+
+    if(n===2){
+        typeLetter();
+    }
+
+    if(n===3){
+        const noBtn=document.getElementById("noBtn");
+        moveNo(noBtn);
+        noBtn.onmouseover=()=>moveNo(noBtn);
+        noBtn.ontouchstart=()=>moveNo(noBtn);
+    }
+}
+
+/* ---------- TYPEWRITER LETTER ---------- */
+const letterText = `My Golu,
+
+You are the brightest light of my life.
+You became my favorite thought ever since you walked into my life.
+You are my comfort zone and only mine. Nothing feels more good than holding your hands and getting lost while staring into your eyes. You are the warmth which I always required.
+Everytime I hug you I feel so so safe as if every stress has melted away. I wish to only feel your warmth everyday and everytime. Everytime you feel sad or down I just wish to be there beside you and hug you and cuddle you till you feel so so safe and comfy that you fall asleep.
+Every smile of yours feels like home to which I should always protect no matter what.
+
+I promise to cherish you, laugh with you, and love you a little more every single day.
+I LOVE YOU.
+
+Forever and always,
+Yours Pumpkin 💕`;
+
+function typeLetter(){
+    const element=document.getElementById("typedLetter");
+    element.innerHTML="";
+    let i=0;
+
+    function typing(){
+        if(i<letterText.length){
+            if(letterText[i]==="\n"){
+                element.innerHTML+="<br>";
+            }else{
+                element.innerHTML+=letterText[i];
+            }
+            i++;
+            setTimeout(typing,35);
+        }
+    }
+    typing();
+}
+
+/* ---------- RUNNING NO BUTTON ---------- */
+function moveNo(btn){
+    const x=Math.random()*(window.innerWidth-120);
+    const y=Math.random()*(window.innerHeight-120);
+    btn.style.left=x+"px";
+    btn.style.top=y+"px";
+}
+
+/* ---------- YES CELEBRATION ---------- */
+function yesAnswer(){
+    document.getElementById("result").innerText=
+    "YAYYYYY HAPPY VALENTINES DAY MY BABY  💖💖💖";
+
+
+    for(let i=0;i<120;i++){
+        let c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.background=`hsl(${Math.random()*360},100%,70%)`;
+        document.body.appendChild(c);
+    }
+
+    for(let i=0;i<18;i++){
+        let h=document.createElement("div");
+        h.className="big-heart";
+        h.innerText="💖";
+        h.style.left=Math.random()*80+"vw";
+        h.style.top=Math.random()*80+"vh";
+        document.body.appendChild(h);
+    }
+}
+</script>
+
+</body>
+</html>
